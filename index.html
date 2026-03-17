@@ -94,3 +94,121 @@
         .search-box:focus { outline: none; border-color: #1890ff; box-shadow: 0 0 0 4px rgba(24,144,255,0.1); }
     </style>
 </head>
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .daily-grid, .weekly-grid, .monthly-grid { grid-template-columns: 1fr; }
+            .header-top { flex-direction: column; gap: 15px; text-align: center; }
+            .mode-selector { flex-wrap: wrap; justify-content: center; }
+        }
+        
+        .favorite-questions {
+            background: linear-gradient(135deg, #f9f0ff 0%, #efdbff 100%);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;
+        }
+        .favorite-questions h3 { color: #722ed1; margin-bottom: 12px; font-size: 16px; }
+        .favorite-questions ol { padding-left: 20px; font-size: 13px; color: #555; line-height: 1.8; }
+        
+        .para-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+        .para-card { background: white; padding: 16px; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .para-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .para-card.active { border-color: #1890ff; }
+        
+        .heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 15px; }
+        .heatmap-cell { aspect-ratio: 1; border-radius: 4px; background: #f0f0f0; }
+        .heatmap-cell.level-1 { background: #d9f7be; }
+        .heatmap-cell.level-2 { background: #95de64; }
+        .heatmap-cell.level-3 { background: #52c41a; }
+        .heatmap-cell.level-4 { background: #237804; }
+        
+        .keyword-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .keyword { padding: 6px 14px; background: #f5f5f5; border-radius: 20px; font-size: 13px; color: #555; }
+        .keyword.large { font-size: 16px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div>
+                <h1>📊 影月的信息聚合中心</h1>
+                <div class="subtitle">OpenClaw 智能策展系统 v3.0</div>
+            </div>
+            <div class="time-badge" id="currentTime">2026-03-17</div>
+        </div>
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('daily')">📅 日报</button>
+            <button class="mode-btn" onclick="setMode('weekly')">📊 周报</button>
+            <button class="mode-btn" onclick="setMode('monthly')">📈 月报</button>
+            <button class="mode-btn" onclick="setMode('projects')">🎯 项目</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <input type="text" class="search-box" placeholder="🔍 搜索..." id="searchInput">
+        
+        <div class="favorite-questions">
+            <h3>🎯 12个核心问题</h3>
+            <ol>
+                <li>如何提高小红书选品成功率？</li>
+                <li>哪些自动化工具可以节省电商运营时间？</li>
+                <li>淘宝和小红书的运营逻辑有何不同？</li>
+                <li>如何平衡多平台运营效率？</li>
+                <li>虚拟产品的版权问题如何规避？</li>
+                <li>哪些技术配置能提升工作流自动化？</li>
+                <li>如何建立可复用的内容资产？</li>
+                <li>跨平台数据同步的最佳实践是什么？</li>
+                <li>如何管理多个账号的内容排期？</li>
+                <li>哪些工具组合能实现真正的无人值守？</li>
+                <li>如何将K12经验迁移到其他赛道？</li>
+                <li>如何保持技术投入与业务增长的平衡？</li>
+            </ol>
+        </div>
+        
+        <div class="para-nav">
+            <div class="para-card projects"><div class="para-icon">🎯</div><div class="para-title">Projects</div><div class="para-count">3个活跃</div></div>
+            <div class="para-card areas active"><div class="para-icon">📂</div><div class="para-title">Areas</div><div class="para-count">4个领域</div></div>
+            <div class="para-card resources"><div class="para-icon">📚</div><div class="para-title">Resources</div><div class="para-count">12个主题</div></div>
+            <div class="para-card archive"><div class="para-icon">📦</div><div class="para-title">Archive</div><div class="para-count">8个归档</div></div>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-card urgent"><div class="stat-label">🔥 紧急</div><div class="stat-value">2</div></div>
+            <div class="stat-card action"><div class="stat-label">⚡ 行动</div><div class="stat-value">5</div></div>
+            <div class="stat-card completed"><div class="stat-label">✅ 完成</div><div class="stat-value">12</div></div>
+            <div class="stat-card pending"><div class="stat-label">⏳ 等待</div><div class="stat-value">3</div></div>
+        </div>
+        
+        <!-- 日报内容 -->
+        <div id="daily-mode" class="content-area active">
+            <div class="daily-grid">
+                <div class="urgent-section">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-icon" style="background:#ff4d4f;color:white;">🔥</div>
+                            <div><div class="section-title">紧急熔炉</div><div class="section-subtitle">需今日内处理</div></div>
+                        </div>
+                        <div class="info-item urgent">
+                            <div class="info-content">完成智能记忆系统 3.0 部署</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-icon" style="background:#1890ff;color:white;">📥</div>
+                        <div><div class="section-title">收件箱</div></div>
+                    </div>
+                    <div class="info-item action">Windows 服务器初始化</div>
+                </div>
+                
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-icon" style="background:#52c41a;color:white;">✅</div>
+                        <div><div class="section-title">已完成</div></div>
+                    </div>
+                    <div class="info-item know">GitHub Pages 部署成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
